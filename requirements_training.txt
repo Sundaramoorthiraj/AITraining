@@ -1,0 +1,35 @@
+# Core ML libraries
+torch>=2.0.0
+transformers>=4.35.0
+datasets>=2.14.0
+accelerate>=0.24.0
+peft>=0.6.0
+bitsandbytes>=0.41.0
+
+# Training frameworks
+unsloth>=2024.1
+axolotl>=0.3.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# File processing (from original requirements)
+PyPDF2
+python-docx
+Pillow
+pytesseract
+opencv-python
+python-magic
+email-validator
+phonenumbers
+
+# Web framework
+flask
+flask-cors
+
+# Utilities
+tqdm
+wandb
+tensorboard
