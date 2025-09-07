@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Parser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .upload-section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            padding: 60px 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #4facfe;
+            background-color: #f8f9ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #4facfe;
+            background-color: #f0f8ff;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .supported-formats {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+            padding: 40px;
+        }
+
+        .result-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .result-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .result-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .result-item strong {
+            color: #4facfe;
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #d63031;
+        }
+
+        .success {
+            background: #e6ffe6;
+            color: #00b894;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #00b894;
+        }
+
+        .clear-btn {
+            background: #ddd;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .clear-btn:hover {
+            background: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .upload-section {
+                padding: 20px;
+            }
+            
+            .upload-area {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resume Parser</h1>
+            <p>Extract key information from resumes in multiple formats</p>
+        </div>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Drag and drop your resume here or click to browse</div>
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+                <input type="file" id="fileInput" class="file-input" accept=".pdf,.doc,.docx,.rtf,.jpg,.jpeg,.png">
+                <div class="supported-formats">
+                    Supported formats: PDF, DOC, DOCX, RTF, JPG, JPEG, PNG
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your resume...</p>
+            </div>
+
+            <div class="results" id="results">
+                <button class="clear-btn" onclick="clearResults()">Upload Another Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // Validate file type
+            const allowedTypes = ['application/pdf', 'application/msword', 
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/rtf', 'image/jpeg', 'image/png'];
+            
+            if (!allowedTypes.includes(file.type)) {
+                showError('Please upload a valid file format (PDF, DOC, DOCX, RTF, JPG, PNG)');
+                return;
+            }
+
+            // Validate file size (16MB max)
+            if (file.size > 16 * 1024 * 1024) {
+                showError('File size must be less than 16MB');
+                return;
+            }
+
+            uploadFile(file);
+        }
+
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            showLoading();
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideLoading();
+                if (data.error) {
+                    showError(data.error);
+                } else {
+                    showResults(data);
+                }
+            })
+            .catch(error => {
+                hideLoading();
+                showError('An error occurred while processing the file: ' + error.message);
+            });
+        }
+
+        function showLoading() {
+            loading.style.display = 'block';
+            results.style.display = 'none';
+        }
+
+        function hideLoading() {
+            loading.style.display = 'none';
+        }
+
+        function showError(message) {
+            results.innerHTML = `
+                <div class="error">
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                    <button class="clear-btn" onclick="clearResults()">Try Again</button>
+                </div>
+            `;
+            results.style.display = 'block';
+        }
+
+        function showResults(data) {
+            let html = '<div class="success"><h3>Resume Parsed Successfully!</h3></div>';
+            
+            // Personal Information
+            if (data.names && (data.names.first_name || data.names.last_name)) {
+                html += `
+                    <div class="result-section">
+                        <h3>👤 Personal Information</h3>
+                        <div class="result-item">
+                            <strong>Name:</strong> ${data.names.first_name} ${data.names.last_name}
+                        </div>
+                `;
+                
+                if (data.emails && data.emails.length > 0) {
+                    html += `<div class="result-item"><strong>Email:</strong> ${data.emails.join(', ')}</div>`;
+                }
+                
+                if (data.phones && data.phones.length > 0) {
+                    html += `<div class="result-item"><strong>Phone:</strong> ${data.phones.join(', ')}</div>`;
+                }
+                
+                html += '</div>';
+            }
+
+            // Professional Links
+            if ((data.linkedin && data.linkedin.length > 0) || (data.github && data.github.length > 0)) {
+                html += '<div class="result-section"><h3>🔗 Professional Links</h3>';
+                
+                if (data.linkedin && data.linkedin.length > 0) {
+                    html += `<div class="result-item"><strong>LinkedIn:</strong> <a href="${data.linkedin[0]}" target="_blank">${data.linkedin[0]}</a></div>`;
+                }
+                
+                if (data.github && data.github.length > 0) {
+                    html += `<div class="result-item"><strong>GitHub:</strong> <a href="${data.github[0]}" target="_blank">${data.github[0]}</a></div>`;
+                }
+                
+                html += '</div>';
+            }
+
+            // Education
+            if (data.education && data.education.length > 0) {
+                html += '<div class="result-section"><h3>🎓 Education</h3>';
+                data.education.forEach(item => {
+                    html += `<div class="result-item">${item}</div>`;
+                });
+                html += '</div>';
+            }
+
+            // Experience
+            if (data.experience && data.experience.length > 0) {
+                html += '<div class="result-section"><h3>💼 Professional Experience</h3>';
+                data.experience.forEach(item => {
+                    html += `<div class="result-item">${item}</div>`;
+                });
+                html += '</div>';
+            }
+
+            // Projects
+            if (data.projects && data.projects.length > 0) {
+                html += '<div class="result-section"><h3>🚀 Projects</h3>';
+                data.projects.forEach(item => {
+                    html += `<div class="result-item">${item}</div>`;
+                });
+                html += '</div>';
+            }
+
+            // File Information
+            html += `
+                <div class="result-section">
+                    <h3>📁 File Information</h3>
+                    <div class="result-item"><strong>File Name:</strong> ${data.file_name}</div>
+                    <div class="result-item"><strong>File Type:</strong> ${data.file_type}</div>
+                </div>
+            `;
+
+            html += '<button class="clear-btn" onclick="clearResults()">Upload Another Resume</button>';
+            
+            results.innerHTML = html;
+            results.style.display = 'block';
+        }
+
+        function clearResults() {
+            results.style.display = 'none';
+            fileInput.value = '';
+        }
+    </script>
+</body>
+</html>
