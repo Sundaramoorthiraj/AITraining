@@ -1,0 +1,12 @@
+flask
+flask-cors
+PyPDF2
+python-docx
+Pillow
+pytesseract
+opencv-python
+regex
+requests
+python-magic
+email-validator
+phonenumbers

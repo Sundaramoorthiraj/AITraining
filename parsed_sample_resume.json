@@ -1,0 +1,60 @@
+{
+  "education": [
+    "Bachelor of Science in Computer Science",
+    "University of California, Berkeley, 2019",
+    "GPA: 3.8/4.0",
+    "Master of Science in Software Engineering",
+    "Stanford University, 2021",
+    "GPA: 3.9/4.0",
+    "PROFESSIONAL EXPERIENCE"
+  ],
+  "emails": [
+    "john.smith@email.com"
+  ],
+  "experience": [
+    "PROFESSIONAL EXPERIENCE",
+    "Senior Software Engineer at Google (2021-2024)",
+    "- Led development of microservices architecture",
+    "- Improved system performance by 50%",
+    "- Mentored junior developers",
+    "- Technologies: Python, Java, Kubernetes, Docker",
+    "Software Engineer at Microsoft (2019-2021)",
+    "- Developed web applications using React and Node.js",
+    "- Collaborated with cross-functional teams",
+    "- Implemented CI/CD pipelines",
+    "- Technologies: JavaScript, TypeScript, Azure",
+    "E-commerce Platform",
+    "- Built full-stack application with Django and PostgreSQL",
+    "- Implemented payment processing with Stripe",
+    "- Deployed on AWS with Docker containers",
+    "- Technologies: Python, Django, PostgreSQL, AWS"
+  ],
+  "file_name": "sample_resume.txt",
+  "file_type": "text/plain",
+  "github": [
+    "https://github.com/johnsmith"
+  ],
+  "linkedin": [
+    "https://linkedin.com/in/johnsmith"
+  ],
+  "names": {
+    "first_name": "John",
+    "last_name": "Smith"
+  },
+  "phones": [],
+  "projects": [
+    "- Developed web applications using React and Node.js",
+    "- Collaborated with cross-functional teams",
+    "- Implemented CI/CD pipelines",
+    "- Technologies: JavaScript, TypeScript, Azure",
+    "E-commerce Platform",
+    "- Built full-stack application with Django and PostgreSQL",
+    "- Implemented payment processing with Stripe",
+    "- Deployed on AWS with Docker containers",
+    "- Technologies: Python, Django, PostgreSQL, AWS",
+    "Task Management App",
+    "- React Native mobile application",
+    "- Real-time collaboration features"
+  ],
+  "raw_text": "John Smith\nSoftware Engineer\nEmail: john.smith@email.com\nPhone: (555) 987-6543\nLinkedIn: https://linkedin.com/in/johnsmith\nGitHub: https://github.com/johnsmith\n\nEDUCATION\nBachelor of Science in Computer Science\nUniversity of California, Berkeley, 2019\nGPA: 3.8/4.0\n\nMaster of Science in Software Engineering\nStanford University, 2021\nGPA: 3.9/4.0\n\nPROFESSIONAL EXPERIENCE\nSenior Software Engineer at Google (2021-2024)\n- Led development of microservices architecture\n- Improved system performance by 50%\n- Mentored junior developers\n- Technologies: Python, Java, Kubernetes, Docker\n\nSoftware Engineer at Microsoft (2019-2021)\n- Developed web applications using React and Node.js\n- Collaborated with cross-functional teams\n- Implemented CI/CD pipelines\n- Technologies: JavaScript, TypeScript, Azure\n\nPROJECTS\nE-commerce Platform\n- Built full-stack application with Django and PostgreSQL\n- Implemented payment processing with Stripe\n- Deployed on AWS with Docker containers\n- Technologies: Python, Djan..."
+}
