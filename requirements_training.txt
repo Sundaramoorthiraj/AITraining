@@ -21,7 +21,7 @@ python-docx
 Pillow
 pytesseract
 opencv-python
-python-magic
+# python-magic  # Not compatible with Windows, using mimetypes instead
 email-validator
 phonenumbers
 

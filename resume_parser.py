@@ -1,7 +1,8 @@
 import os
 import re
 import json
-import magic
+# import magic  # Not available on Windows, using alternative
+import mimetypes
 import spacy
 # import pandas as pd  # Not needed for this implementation
 import PyPDF2
@@ -55,24 +56,28 @@ class ResumeParser:
         ]
 
     def detect_file_type(self, filepath):
-        """Detect file type using python-magic"""
+        """Detect file type using file extension (Windows-compatible)"""
         try:
-            mime_type = magic.from_file(filepath, mime=True)
-            return mime_type
+            # Try using mimetypes first
+            mime_type, _ = mimetypes.guess_type(filepath)
+            if mime_type:
+                return mime_type
         except:
-            # Fallback to file extension
-            ext = os.path.splitext(filepath)[1].lower()
-            mime_map = {
-                '.pdf': 'application/pdf',
-                '.doc': 'application/msword',
-                '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                '.rtf': 'application/rtf',
-                '.jpg': 'image/jpeg',
-                '.jpeg': 'image/jpeg',
-                '.png': 'image/png',
-                '.txt': 'text/plain'
-            }
-            return mime_map.get(ext, 'unknown')
+            pass
+        
+        # Fallback to file extension mapping
+        ext = os.path.splitext(filepath)[1].lower()
+        mime_map = {
+            '.pdf': 'application/pdf',
+            '.doc': 'application/msword',
+            '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            '.rtf': 'application/rtf',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.txt': 'text/plain'
+        }
+        return mime_map.get(ext, 'unknown')
 
     def extract_text_from_pdf(self, filepath):
         """Extract text from PDF files"""

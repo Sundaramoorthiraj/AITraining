@@ -7,6 +7,6 @@ pytesseract
 opencv-python
 regex
 requests
-python-magic
+# python-magic  # Not compatible with Windows, using mimetypes instead
 email-validator
 phonenumbers
