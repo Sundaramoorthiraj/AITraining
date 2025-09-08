@@ -1,0 +1,66 @@
+Local RAG System Documentation
+
+Overview
+The Local RAG (Retrieval-Augmented Generation) System is a comprehensive solution for document question-and-answering using open-source large language models running on CPU. This system enables organizations to maintain data privacy while leveraging the power of modern AI for document analysis.
+
+Key Features
+- Document Processing: Supports PDF, DOCX, DOC, XLSX, XLS, and TXT files
+- Vector Embeddings: Uses Sentence Transformers for semantic search
+- Vector Storage: FAISS-based efficient similarity search
+- Local LLM: Quantized models for CPU inference
+- Privacy-First: All processing happens locally
+
+Architecture Components
+
+1. Document Processor
+The document processor handles text extraction from various file formats. It splits documents into manageable chunks with configurable overlap to maintain context continuity.
+
+2. Embedding Generator
+Uses the all-MiniLM-L6-v2 model from Sentence Transformers to generate vector representations of text chunks. These embeddings capture semantic meaning for similarity search.
+
+3. Vector Store
+FAISS (Facebook AI Similarity Search) provides efficient indexing and retrieval of vector embeddings. It supports cosine similarity search for finding relevant document chunks.
+
+4. LLM Inference
+Local language model inference using quantized models optimized for CPU execution. The system supports various open-source models including Llama 2 variants.
+
+Performance Considerations
+- CPU-only inference reduces hardware costs
+- Quantized models minimize memory requirements
+- Vector indexing enables fast similarity search
+- Chunking strategy balances context and performance
+
+Use Cases
+- Internal document search and analysis
+- Compliance and regulatory document review
+- Knowledge base question answering
+- Research document summarization
+- Technical documentation assistance
+
+Installation Requirements
+- Python 3.8 or higher
+- 8GB+ RAM recommended
+- CPU with AVX support for optimal performance
+- Sufficient disk space for model caching
+
+Configuration Options
+The system supports extensive configuration through the config.py file:
+- Chunk size and overlap parameters
+- Embedding model selection
+- LLM model configuration
+- Vector store settings
+- Inference parameters
+
+Security and Privacy
+All document processing and model inference occurs locally, ensuring:
+- No data transmission to external services
+- Complete control over sensitive information
+- Compliance with data residency requirements
+- Protection of intellectual property
+
+Future Enhancements
+- Support for additional document formats
+- Multi-language document processing
+- Advanced chunking strategies
+- Model fine-tuning capabilities
+- Distributed processing support

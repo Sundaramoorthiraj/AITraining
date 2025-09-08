@@ -1,12 +1,27 @@
-flask
-flask-cors
-PyPDF2
-python-docx
-Pillow
-pytesseract
-opencv-python
-regex
-requests
-python-magic
-email-validator
-phonenumbers
+# Core dependencies for RAG system
+torch>=2.0.0
+transformers>=4.30.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.4
+langchain>=0.0.200
+langchain-community>=0.0.10
+
+# Document processing
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+openpyxl>=3.1.0
+python-magic>=0.4.27
+
+# Web interface
+streamlit>=1.25.0
+gradio>=3.35.0
+
+# Utilities
+numpy>=1.24.0
+pandas>=2.0.0
+tqdm>=4.65.0
+python-dotenv>=1.0.0
+
+# Optional: For better performance
+accelerate>=0.20.0
+bitsandbytes>=0.41.0
